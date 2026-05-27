@@ -1,0 +1,1 @@
+/mnt/sdb/THG6500-MINI-TAX2-OPENWRT-BSP_TGP3/build_dir/host/cmake-3.22.3

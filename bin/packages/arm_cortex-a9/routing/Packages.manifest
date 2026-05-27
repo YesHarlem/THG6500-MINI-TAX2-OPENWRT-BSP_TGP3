@@ -1,0 +1,98 @@
+Package: quagga-libzebra
+Version: 1.2.4-2
+Depends: libc, quagga
+Source: feeds/routing/quagga
+SourceName: quagga-libzebra
+License: GPL-2.0-or-later
+Section: net
+SourceDateEpoch: 1645886244
+Maintainer: Vasilis Tsiligiannis <acinonyx@openwrt.gr>
+Architecture: arm_cortex-a9
+Installed-Size: 131651
+Filename: quagga-libzebra_1.2.4-2_arm_cortex-a9.ipk
+Size: 131296
+SHA256sum: 9d37454e9cd288fd169779cfe4dbd9adfbec022fc646ac70065447ab4f042101
+Description:  zebra library
+
+Package: quagga-ripd
+Version: 1.2.4-2
+Depends: libc, quagga, quagga-libzebra
+Source: feeds/routing/quagga
+SourceName: quagga-ripd
+License: GPL-2.0-or-later
+Section: net
+SourceDateEpoch: 1645886244
+Maintainer: Vasilis Tsiligiannis <acinonyx@openwrt.gr>
+Architecture: arm_cortex-a9
+Installed-Size: 36296
+Filename: quagga-ripd_1.2.4-2_arm_cortex-a9.ipk
+Size: 37067
+SHA256sum: 594fe31e2c1fae83c4fe4f27c894558f2bd3b2c72d3cd842964c16f0abd8aa17
+Description:  RIP routing engine
+
+Package: quagga-vtysh
+Version: 1.2.4-2
+Depends: libc, quagga, quagga-libzebra, libreadline8, libncurses6
+Source: feeds/routing/quagga
+SourceName: quagga-vtysh
+License: GPL-2.0-or-later
+Section: net
+SourceDateEpoch: 1645886244
+Maintainer: Vasilis Tsiligiannis <acinonyx@openwrt.gr>
+Architecture: arm_cortex-a9
+Installed-Size: 124402
+Filename: quagga-vtysh_1.2.4-2_arm_cortex-a9.ipk
+Size: 124721
+SHA256sum: 106b0c382ef9f44e1fe8f73c76bbbf34abc6c194df8b44423537d3465bc89c33
+Description:  integrated shell for Quagga routing software
+
+Package: quagga-watchquagga
+Version: 1.2.4-2
+Depends: libc, quagga, quagga-libzebra
+Source: feeds/routing/quagga
+SourceName: quagga-watchquagga
+License: GPL-2.0-or-later
+Section: net
+SourceDateEpoch: 1645886244
+Maintainer: Vasilis Tsiligiannis <acinonyx@openwrt.gr>
+Architecture: arm_cortex-a9
+Installed-Size: 11483
+Filename: quagga-watchquagga_1.2.4-2_arm_cortex-a9.ipk
+Size: 12276
+SHA256sum: 1d9692f5bd43d238d7395198a9eae12675399a3b1a12d4ada520a93c9035b1ec
+Description:  Quagga watchdog
+
+Package: quagga-zebra
+Version: 1.2.4-2
+Depends: libc, quagga, quagga-libzebra
+Source: feeds/routing/quagga
+SourceName: quagga-zebra
+License: GPL-2.0-or-later
+Section: net
+SourceDateEpoch: 1645886244
+Maintainer: Vasilis Tsiligiannis <acinonyx@openwrt.gr>
+Architecture: arm_cortex-a9
+Installed-Size: 89170
+Filename: quagga-zebra_1.2.4-2_arm_cortex-a9.ipk
+Size: 89689
+SHA256sum: b3fd86b08eb5c287c0d2759dbb6b5cd9c490e7518bdd02372df618b48e94fa46
+Description:  Zebra daemon
+
+Package: quagga
+Version: 1.2.4-2
+Depends: libc, librt
+Source: feeds/routing/quagga
+SourceName: quagga
+License: GPL-2.0-or-later
+Section: net
+SourceDateEpoch: 1645886244
+Maintainer: Vasilis Tsiligiannis <acinonyx@openwrt.gr>
+Architecture: arm_cortex-a9
+Installed-Size: 2390
+Filename: quagga_1.2.4-2_arm_cortex-a9.ipk
+Size: 3225
+SHA256sum: f1206f85549fb51b0baa3060481ece01272865d32a37a1bb1366258f4ff17719
+Description:  A routing software package that provides TCP/IP based routing services
+ with routing protocols support such as RIPv1, RIPv2, RIPng, OSPFv2,
+ OSPFv3, BGP-4, and BGP-4+
+
