@@ -1,0 +1,16 @@
+# THG6500-TAX2 BSP overrides (merged after config/defconfig by make defconfig)
+# Kernel USB/TUN: target/linux/tr6560/generic/config-5.10 + base-files (see README.md)
+
+CONFIG_PACKAGE_kmod-tun=m
+# CONFIG_PACKAGE_kmod-usb-core is not set
+# CONFIG_PACKAGE_kmod-usb-ehci is not set
+# CONFIG_PACKAGE_kmod-usb-ohci is not set
+# CONFIG_PACKAGE_kmod-usb2 is not set
+# CONFIG_PACKAGE_kmod-usb3 is not set
+# CONFIG_PACKAGE_kmod-tr6560-usb-crg is not set
+# CONFIG_PACKAGE_luci-app-lxc is not set
+# CONFIG_PACKAGE_luci-app-omcproxy is not set
+# CONFIG_PACKAGE_omcproxy is not set
+# CONFIG_PACKAGE_lxc is not set
+# CONFIG_PACKAGE_liblxc is not set
+# CONFIG_PACKAGE_rpcd-mod-lxc is not set

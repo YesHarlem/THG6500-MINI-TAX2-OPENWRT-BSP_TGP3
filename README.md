@@ -97,6 +97,17 @@ scp root@<官方设备IP>:/lib/modules/5.10.138/tri_dfx.ko \
 
 可保留用户态工具：`usbutils`、`pciutils`、`libusb-1.0`。
 
+### 5. 默认软件包（已剔除）
+
+`target/linux/tr6560/Makefile` 的 `DEFAULT_PACKAGES` 与根目录 `.config` 中**不再默认包含**：
+
+| 已移除 | 连带依赖（一并关闭） |
+|--------|----------------------|
+| `luci-app-omcproxy` | `omcproxy` |
+| `luci-app-lxc` | `lxc`、`liblxc`、`rpcd-mod-lxc` 及 LXC 工具链 |
+
+IGMP/组播代理（`omcproxy`）与容器管理（LXC）在 THG6500 上通常不需要，去掉可减小固件体积。若需使用，请在 `make menuconfig` → LuCI Applications 中手动勾选。
+
 ---
 
 ## 编译固件
@@ -112,19 +123,36 @@ scp root@<官方设备IP>:/lib/modules/5.10.138/tri_dfx.ko \
 ./scripts/feeds install -a
 ```
 
-### 配置同步（不要用 defconfig 覆盖整份 .config）
+### 生成默认 `.config`（推荐）
+
+本仓库已定制 **`make defconfig`**，会从下列文件生成与 THG6500 修复一致的配置：
+
+| 文件 | 作用 |
+|------|------|
+| `config/defconfig` | 机型 THG6500-TAX2、常用工具包等（可由 `./scripts/diffconfig.sh` 再生成） |
+| `config/defconfig.fragment` | USB 包关闭、`kmod-tun`、禁用 lxc/omcproxy |
+| `target/linux/tr6560/Makefile` | `DEFAULT_PACKAGES`（无 `luci-app-omcproxy`） |
+| `target/linux/tr6560/generic/config-5.10` | 内核 xHCI / TUN（编进内核，非 opkg kmod） |
 
 ```bash
-# 同步 Kconfig，保留现有选项；全部回车即可
-yes "" | make oldconfig
+make defconfig          # 生成默认 .config（USB/TUN/无 lxc·omcproxy）
 
-# 确认 USB 相关包仍关闭
-grep -E 'kmod-usb3|kmod-usb-ehci|kmod-usb-core' .config
+# 快速检查
+grep -E 'kmod-tun|kmod-usb-core|kmod-usb3|luci-app-lxc|luci-app-omcproxy' .config
 ```
 
-**不要**执行 `make defconfig`，除非你有意重置整份软件包配置。
+期望：`kmod-tun=m`，`kmod-usb-core` / `kmod-usb3` / lxc / omcproxy 均为 `# ... is not set`。
 
-`make menuconfig` 保存后，请再次确认未勾选 `kmod-usb-ehci/ohci/usb2/usb3`、`kmod-tr6560-usb-crg`。
+若 feeds 更新后提示 configuration out of sync，可执行 `yes "" | make oldconfig`，**之后**再合并一次 fragment（`oldconfig` 可能误开 `kmod-usb-core`）：
+
+```bash
+yes "" | make oldconfig
+./scripts/kconfig.pl '+' .config config/defconfig.fragment > tmp/.config.frag && mv tmp/.config.frag .config
+```
+
+更新 feeds 或大幅改包后，可重新导出基础项：`./scripts/diffconfig.sh > config/defconfig`（保留 `defconfig.fragment` 不变）。
+
+`make menuconfig` 保存后，请确认未误开 `kmod-usb-ehci/ohci/usb2/usb3`、`kmod-tr6560-usb-crg`、`luci-app-lxc`、`luci-app-omcproxy`。
 
 ### 编译
 
@@ -211,6 +239,25 @@ target/linux/tr6560/
 └── files-5.10/arch/arm/boot/dts/
     ├── triductor-tr6560.dtsi      # EHCI/OHCI disabled
     └── THG6500-TAX2.dts           # 等
+```
+
+---
+
+## Git 提交说明
+
+仓库根目录 [`.gitignore`](.gitignore) 已忽略 `build_dir/`、`staging_dir/`、`bin/`、`dl/`、`tmp/`、`feeds/` 等编译与 feeds 生成内容。
+
+**会提交的配置文件**（请勿加入 gitignore）：
+
+- `.config` — 当前构建配置（可用 `make defconfig` 再生成）
+- `config/defconfig`、`config/defconfig.fragment` — `make defconfig` 种子
+
+若历史上已误提交编译目录，从索引移除（不删本地文件）：
+
+```bash
+git rm -r --cached build_dir staging_dir bin dl tmp feeds 2>/dev/null || true
+git add .gitignore README.md config/ .config target/
+git status
 ```
 
 ---

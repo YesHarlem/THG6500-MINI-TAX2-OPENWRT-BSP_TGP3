@@ -115,10 +115,18 @@ config-clean: FORCE
 	$(_SINGLE)$(NO_TRACE_MAKE) -C scripts/config clean
 
 defconfig: scripts/config/conf prepare-tmpinfo FORCE
-	touch .config
-	@if [ ! -s .config -a -e $(HOME)/.openwrt/defconfig ]; then cp $(HOME)/.openwrt/defconfig .config; fi
+	@if [ -f $(TOPDIR)/config/defconfig ]; then \
+		cp $(TOPDIR)/config/defconfig .config; \
+	else \
+		touch .config; \
+		if [ ! -s .config -a -e $(HOME)/.openwrt/defconfig ]; then cp $(HOME)/.openwrt/defconfig .config; fi; \
+	fi
 	[ -L .config ] && export KCONFIG_OVERWRITECONFIG=1; \
 		$< $(KCONF_FLAGS) --defconfig=.config Config.in
+	@if [ -f $(TOPDIR)/config/defconfig.fragment ]; then \
+		./scripts/kconfig.pl '+' .config $(TOPDIR)/config/defconfig.fragment > tmp/.config.frag; \
+		mv tmp/.config.frag .config; \
+	fi
 
 confdefault-y=allyes
 confdefault-m=allmod

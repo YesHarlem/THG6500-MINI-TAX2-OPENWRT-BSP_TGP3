@@ -1,0 +1,92 @@
+# THG6500 OpenWrt BSP — 勿提交编译产物与本地环境文件
+# 基于 OpenWrt 上游 .gitignore，保留本仓库需提交的 config/defconfig* 与 .config
+
+### 编译输出 / 下载 / 临时目录
+/build_dir/
+/staging_dir/
+/staging_dir_host/
+/bin/
+/dl/
+/tmp/
+/logs/
+/ccache/
+
+### feeds（scripts/feeds install 生成的符号链接与索引）
+/feeds/
+/feeds.conf
+/package/feeds/
+/feeds.*.tmp/
+/feeds/**/*.tmp/
+
+### 配置备份与本地覆盖（保留根目录 .config 与 config/defconfig*）
+/.config.old
+/.config.set
+/.config.backup
+/config/defconfig.test
+/tmp/.config*
+/.toolchain_build_ver
+
+### Kconfig / scripts 构建产物
+/scripts/config/conf
+/scripts/config/mconf
+/scripts/config/nconf
+/scripts/config/qconf
+/scripts/config/gconf
+/scripts/config/mconf-cfg
+/scripts/config/mconf_check
+/scripts/config/*.o
+/scripts/config/lxdialog/*.o
+/scripts/config/lexer.lex.c
+/scripts/config/lexer.lex.o
+
+### 编辑器 / IDE / 本地工具
+/.cursor/
+/.vscode/
+*.swp
+*.swo
+*~
+.#*
+*#
+.DS_Store
+.idea/
+*.orig
+*.rej
+
+### 嵌套副本 / 参考树（勿与主工程混提交）
+/THG6500-TAX2-mini-OPENWRT-BSP/
+
+### 本地 feeds 符号链接（feeds install 或手工 ln -s）
+/package/harlem
+/package/kernel/ch343ser
+
+### 镜像签名密钥（本地生成，勿入库）
+/key-build
+/key-build.pub
+/key-build.ucert
+/key-build.ucert.revoke
+/private-key.pem
+/public-key.pem
+
+### 调试日志（本地）
+/log.txt
+*.log
+
+### 补丁与杂项（与上游一致）
+/*.patch
+/llvm-bpf*
+/env
+/files
+/overlay
+/target/linux/feeds
+/package/openwrt-packages
+/git-src
+.project
+.cproject
+.emacs.desktop*
+TAGS
+
+### 对象文件（源码树内误生成）
+*.o
+*.a
+*.so
+*.cmd

@@ -24,7 +24,7 @@ include $(INCLUDE_DIR)/target.mk
 # easycwmp相关package
 # triductor自研package
 DEFAULT_PACKAGES += curl hostapd-utils wireless-tools wpad-basic-wolfssl wpa-cli uledd getopt\
-luci luci-compat luci-ssl luci-app-omcproxy\
+luci luci-compat luci-ssl \
 conntrack ethtool ip-bridge memtester nvram xl2tpd udhcpsnoop\
 kmod-gpio-button-hotplug kmod-leds-gpio \
 dmc-215 easycwmp tr069_stun \
