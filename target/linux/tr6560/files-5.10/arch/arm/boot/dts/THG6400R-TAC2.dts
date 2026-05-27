@@ -71,7 +71,7 @@
 	// 此节点标识单板gpio特性
 	board{
 		compatible = "tri,board";
-		usb_power = <27>; // usb 电源控制vbus管脚
+		// usb_power = <27>; // GPIO27 via tri_setup (see README.md)
 		current_limit = <28>; //gpio限流保护引脚，目前无芯片使用
 		
 		tr5120;

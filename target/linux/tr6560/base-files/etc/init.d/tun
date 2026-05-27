@@ -1,0 +1,11 @@
+#!/bin/sh /etc/rc.common
+# Ensure /dev/net/tun exists (kernel has no DEVTMPFS on this target).
+
+START=12
+
+start() {
+	[ -e /dev/net/tun ] && return 0
+	mkdir -p /dev/net
+	mknod /dev/net/tun c 10 200
+	chmod 666 /dev/net/tun
+}

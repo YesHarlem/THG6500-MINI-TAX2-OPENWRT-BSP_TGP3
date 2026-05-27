@@ -37,4 +37,3 @@ start()
     uci -c /var/state set upstreams.us1=upstream
     uci -c /var/state/ commit upstreams
 }
-

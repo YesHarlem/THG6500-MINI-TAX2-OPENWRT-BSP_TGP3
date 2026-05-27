@@ -253,6 +253,7 @@
 	usb_phy@0x1016c000{
 		compatible = "tri,usb_phy";
 		reg = <0x1016c000 0x1000>;
+		status = "okay";
 	};
 	
 	usb_ohci@0x10a50000{
@@ -260,6 +261,7 @@
 		compatible = "generic-ohci";
 		dma-coherent;
 		interrupts = <0 35 4>; //67
+		status = "disabled";
 	};
 
 	usb_ehci@0x10a40000{
@@ -267,6 +269,7 @@
 		compatible = "generic-ehci";
 		dma-coherent;
 		interrupts = <0 36 4>; //68
+		status = "disabled";
 	};
 
 	spi@0x10114000 {
