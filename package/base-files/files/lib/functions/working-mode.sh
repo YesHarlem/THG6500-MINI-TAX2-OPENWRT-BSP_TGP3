@@ -35,7 +35,7 @@ working_mode_switch_prepare()
 
 
 # description: change dhcp config according to working mode
-# input: $1 - new mode, "router"/"bridge"/"repeater"/"agent"/"controller"
+# input: $1 - new mode, "router"/"bridge"/"repeater"/"controller"
 working_mode_set_dhcp()
 {
     local newMode=$1
@@ -60,7 +60,7 @@ working_mode_set_dhcp()
 
 
 # description: change network config according to working mode
-# input: $1 - new mode, "router"/"bridge"/"repeater"/"agent"/"controller"
+# input: $1 - new mode, "router"/"bridge"/"repeater"/"controller"
 working_mode_set_network()
 {
     local newMode=$1
@@ -75,7 +75,7 @@ working_mode_set_network()
 
 
     uci -q del_list network.@device[0].ports=wan
-    if [ "$newMode" = "bridge" -o "$newMode" = "agent" -o $newMode = "repeater" ]; then
+    if [ "$newMode" = "bridge" -o $newMode = "repeater" ]; then
         uci add_list network.@device[0].ports=wan
     fi
 
@@ -90,7 +90,7 @@ working_mode_set_network()
             enableIfList="wwan"
             disableIfList="wan wan6"
             ;;
-        'bridge' | 'agent')
+        'bridge')
             curmode='bridge'
             enableIfList=""
             disableIfList="wwan wan wan6"
@@ -114,7 +114,7 @@ working_mode_set_network()
 
 
 # description: change prplmesh config according to working mode
-# input: $1 - new mode, "router"/"bridge"/"repeater"/"agent"/"controller"
+# input: $1 - new mode, "router"/"bridge"/"repeater"/"controller"
 working_mode_set_prplmesh()
 {
     local newMode=$1
@@ -125,17 +125,6 @@ working_mode_set_prplmesh()
     fi
 
     case $newMode in
-        'agent')
-            uci batch <<EOF
-                set prplmesh.config.enable='1'
-                set prplmesh.config.management_mode='Multi-AP-Agent'
-                set prplmesh.config.operating_mode='WDS-Repeater'
-                set prplmesh.config.wired_backhaul=1
-                set prplmesh.config.master=0
-                set prplmesh.config.gateway=0
-                set prplmesh.config.role_switched='1'
-EOF
-            ;;
         'controller')
             uci batch <<EOF
                 set prplmesh.config.enable='1'
@@ -192,15 +181,6 @@ wifi_iface_cb()
             fi
             disableIfnameList='wlan0-ap-bh wlan0-ap-fh wlan1-ap-bh wlan1-ap-fh wlan0-sta-bh wlan1-sta-bh wlan0-sta-rp'
             ;;
-        'agent')
-            if [ "$ifname" = 'wlan1-ap-fh' ]; then
-                uci set wireless.$1.wps_pushbutton='1'
-            else
-                uci set wireless.$1.wps_pushbutton='0'
-            fi
-            enableIfnameList='wlan0-ap-bh wlan0-ap-fh wlan1-ap-bh wlan1-ap-fh wlan0-sta-bh wlan1-sta-bh'
-            disableIfnameList='wlan0-sta-rp'
-            ;;
         'controller')
             if [ "$ifname" = 'wlan1-ap-fh' ]; then
                 uci set wireless.$1.wps_pushbutton='1'
@@ -229,7 +209,7 @@ wifi_iface_cb()
 
 
 # description: change wireless config according to working mode(only need for "repeater" mode)
-# input: $1 - new mode, "router"/"bridge"/"repeater"/"agent"/"controller"
+# input: $1 - new mode, "router"/"bridge"/"repeater"/"controller"
 #        $2 - ssid of the uplink ap, repeater use only
 #        $3 - encryption of the uplink ap, repeater use only
 #        $4 - key of the uplink ap, repeater use only
