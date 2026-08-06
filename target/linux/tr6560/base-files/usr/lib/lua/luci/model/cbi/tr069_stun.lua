@@ -1,5 +1,5 @@
 --[[
-LuCI model for easycwmp configuration management
+LuCI model for tr069_stun configuration
 Copyright PIVA Software <pivasoftware.com>
 ]]--
 

@@ -19,13 +19,6 @@ start_service() {
 		procd_set_param respawn "3" "7" "0"
 		procd_close_instance
 	fi
-	local DiagnosticsState=`uci -q ${UCI_CONFIG_DIR:+-c $UCI_CONFIG_DIR} -P /var/state get easycwmp.@local[0].ServerSelectionDiagnosticsState`
-	if [ "$DiagnosticsState" == "Requested" ]; then
-		procd_open_instance
-		procd_set_param command "$PROG"
-		procd_set_param respawn "3" "7" "0"
-		procd_close_instance
-	fi
 }
 
 boot() {

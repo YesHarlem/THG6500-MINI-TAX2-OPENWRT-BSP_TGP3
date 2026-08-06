@@ -4,7 +4,7 @@ check_working_mode()
     local ret=0
 
     case $newMode in
-        'router'|'bridge'|'repeater'|'agent'|'controller')
+        'router'|'bridge'|'repeater'|'controller')
             ;;
         *)
             logger -t working-mode -s "invalid newMode=${newMode}"
@@ -18,7 +18,7 @@ check_working_mode()
 
 working_mode_switch_prepare()
 {
-    local downIfList="wan wan6 wwan agent"
+    local downIfList="wan wan6 wwan"
     local disabled=''
 
     for interface in $downIfList; do
@@ -83,16 +83,16 @@ working_mode_set_network()
         'router' | 'controller')
             curmode='router'
             enableIfList="wan wan6"
-            disableIfList="agent wwan"
+            disableIfList="wwan"
             ;;
         'repeater')
             curmode='repeater'
             enableIfList="wwan"
-            disableIfList="agent wan wan6"
+            disableIfList="wan wan6"
             ;;
         'bridge' | 'agent')
             curmode='bridge'
-            enableIfList="agent"
+            enableIfList=""
             disableIfList="wwan wan wan6"
             ;;
         *)

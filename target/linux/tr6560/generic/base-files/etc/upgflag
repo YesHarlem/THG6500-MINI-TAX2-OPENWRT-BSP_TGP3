@@ -7,8 +7,8 @@ param=""
 flag="$(cat /proc/mtd | grep kernelA | wc -l)"
 UPG_DEV_CHAR=$(find_char_mtd_part upgflag)
 UPG_DEV=$(find_mtd_part upgflag)
-curval=`/sbin/uci -q get easycwmp.@device[0].software_version`
-bakval=`/sbin/uci -q get easycwmp.@device[0].backup_version`
+curval=`cat /tmp/dual_version.meta 2>/dev/null | grep curversion | cut -d = -f 2`
+bakval=`cat /tmp/dual_version.meta 2>/dev/null | grep backupversion | cut -d = -f 2`
 
 if [ "$1" = "get" ]; then
 	if [ $# -ne 2 ]; then
@@ -56,11 +56,6 @@ elif [ "$1" = "switch" ]; then
 		echo "dual-firmware startup error"
 		exit 0
 	fi
-	[ "$curval" != "$bakval" ] && { 
-		/sbin/uci -q set easycwmp.@device[0].software_version="$bakval"
-		/sbin/uci -q set easycwmp.@device[0].backup_version="$curval"
-		/sbin/uci -q commit easycwmp
-	}
 	sync
 	sleep 1
 	reboot

@@ -11,6 +11,9 @@ triductor_setup_interfaces()
 	THG6400-TAC2|THG6400R-TAC2|THG6400PR-TAC2)
 		ucidef_set_interfaces_lan_wan "lan1 lan2 lan3" wan
 		;;
+	THG6500-TAX2)
+		ucidef_set_interfaces_lan_wan "lan1" wan
+		;;
 	*)
 		ucidef_set_interfaces_lan_wan "lan1 lan2 lan3 lan4" wan
 		;;
